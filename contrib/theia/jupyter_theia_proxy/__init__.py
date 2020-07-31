@@ -13,7 +13,9 @@ def setup_theia():
         full_path = shutil.which('theia')
         if not full_path:
             raise FileNotFoundError('Can not find theia executable in $PATH')
-        return ['start-theia.sh', 'start', '.', '--hostname=127.0.0.1', '--port=' + str(port)]
+        username = os.environ.get('NB_USER', 'jovyan')
+        path = '/home/' + username
+        return ['start-theia.sh', 'start', path, '--hostname=127.0.0.1', '--port=' + str(port)]
 
     return {
         'command': _theia_command,
